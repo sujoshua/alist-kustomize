@@ -1,0 +1,11 @@
+# Config storage for storeing alist data and config.
+
+# storage size
+- op: replace
+  path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
+  value: 5Gi
+
+# storage class
+- op: replace
+  path: /spec/volumeClaimTemplates/0/spec/storageClassName
+  value: local-path

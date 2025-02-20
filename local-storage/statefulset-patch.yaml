@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: alist
+spec:
+  template:
+    spec:
+      containers:
+        - name: alist
+          volumeMounts:
+            - name: local-storage
+              mountPath: /local-storage
+      volumes:
+        - name: local-storage
+          persistentVolumeClaim:
+            claimName: local-storage

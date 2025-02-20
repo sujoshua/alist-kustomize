@@ -1,0 +1,9 @@
+# storage size
+- op: replace
+  path: /spec/resources/requests/storage
+  value: 200Gi
+
+# storage class
+- op: replace
+  path: /spec/storageClassName
+  value: hdd

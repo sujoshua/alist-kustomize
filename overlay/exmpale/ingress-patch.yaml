@@ -1,0 +1,9 @@
+# ingress class
+- op: replace
+  path: /spec/ingressClassName
+  value: traefik
+
+# host
+- op: replace
+  path: /spec/rules/0/host
+  value: alist.example.com

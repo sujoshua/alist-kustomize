@@ -1,0 +1,53 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# namespace for all resources
+namespace: alist
+
+# optional: set name prefix
+namePrefix: alist-
+# optional: set labels to all resources
+labels:
+- includeSelectors: true
+  pairs:
+    app: alist
+
+configMapGenerator:
+# env passed to alist container
+- name: env 
+  literals:
+  # PUID and PGID are setted, no need to set them here
+  - UMASK=022
+  - TZ=Asia/Shanghai
+
+images:
+- name: xhofe/alist
+  newTag: v3.42.0
+
+patches:
+  # customize the ingress
+  - path: ingress-patch.yaml
+    target:
+      kind: Ingress
+      name: ingress
+  # customize the data storage
+  - path: data-storage-patch.yaml
+    target:
+      kind: StatefulSet
+      name: alist
+  # customize the local storage
+  # if you don't want to use local storage, comment below lines
+  - path: local-storage-pvc-patch.yaml
+    target:
+      kind: PersistentVolumeClaim
+      name: local-storage
+  
+
+components:
+  # Add additional local storage to alist
+  # if you don't want to use local storage, comment this line
+  - local-storage
+
+resources:
+- base
+- namespace.yaml
